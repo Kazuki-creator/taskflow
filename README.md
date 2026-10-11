@@ -1,75 +1,76 @@
-# React + TypeScript + Vite
+# TaskFlow
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+TypeScript・Reactで開発した、シンプルなタスク管理Webアプリケーションです。
 
-Currently, two official plugins are available:
+タスクの登録から進捗管理までを直感的に操作できるように設計しました。
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## デモ
 
-## React Compiler
+[TaskFlowをブラウザで開く](https://taskflow-nine-teal.vercel.app/)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 主な機能
 
-## Expanding the ESLint configuration
+- タスクの新規登録
+- タスクの編集・削除
+- タスクの完了・未完了の切り替え
+- タスクの検索
+- ステータスによるフィルタリング
+- タスク件数・進捗状況の表示
+- LocalStorageによるデータ保存
+- レスポンシブデザイン
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 技術スタック
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+| 分類 | 使用技術 |
+|---|---|
+| 言語 | TypeScript |
+| フロントエンド | React 19 |
+| ビルドツール | Vite 8 |
+| スタイリング | CSS |
+| データ保存 | LocalStorage |
+| コンテナ | Docker |
+| Webサーバー | Nginx |
+| ソースコード管理 | Git / GitHub |
+| 開発環境 | GitHub Codespaces |
+| デプロイ | Vercel |
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## システム構成
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+React + TypeScriptで構築したクライアントサイドアプリケーションです。
 
+タスクデータはブラウザのLocalStorageに保存するため、バックエンドサーバーやデータベースを必要としません。
+
+Dockerではマルチステージビルドを採用し、Node.jsでビルドした静的ファイルをNginxで配信する構成にしています。
+
+## ローカルでの実行方法
+
+Node.jsとnpmが必要です。
+
+```bash
+git clone https://github.com/Kazuki-creator/taskflow.git
+cd taskflow
+npm ci
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+## Dockerでの実行方法
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Dockerが必要です。
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```bash
+docker build -t taskflow:1.0 .
+docker run --rm -d --name taskflow -p 8080:80 taskflow:1.0
 ```
+
+起動後、`http://localhost:8080` にアクセスしてください。
+
+## 今後の拡張予定
+
+- バックエンドAPIとの連携
+- データベースへのタスク保存
+- ユーザー認証機能
+- 自動テスト・CI/CDの整備
+
+## ソースコード
+
+https://github.com/Kazuki-creator/taskflow
